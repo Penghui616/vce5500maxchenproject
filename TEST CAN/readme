@@ -1,0 +1,13 @@
+sudo ip link add dev vcan0 type vcan
+sudo ip link set up vcan0
+
+sudo systemctl start mosquitto
+sudo systemctl enable mosquitto
+
+
+#!/bin/bash
+python3 -m http.server 8080
+python3 edge_server.py; exec bash"
+python3 vehicle_ecu_sim.py; exec bash"
+python3 video_forward_server.py; exec bash"
+python3 vehicle_camera_stream.py; exec bash"

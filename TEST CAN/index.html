@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Police Vehicle Interface</title>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h2, h3 {
+      color: #333;
+    }
+    #display {
+      margin-bottom: 20px;
+      padding: 12px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    img {
+      border: 2px solid #333;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>📡 Latest Vehicle Data</h2>
+  <div id="display">Waiting for data...</div>
+
+  <h3>🎥 In-Car Video Feed</h3>
+  <img src="http://localhost:8081/video_feed" width="640" height="480" />
+
+  <script>
+    const socket = io('http://localhost:5000');
+    const display = document.getElementById('display');
+
+    socket.on('forwarded_vehicle_data', function(data) {
+      const content = `⏱ Time: ${data.timestamp} | VIN: ${data.vin} | Gear: ${data.prndl} | Speed: ${data.speed} km/h`;
+      display.innerHTML = `<p>${content}</p>`;
+    });
+  </script>
+</body>
+</html>
+
+
+
